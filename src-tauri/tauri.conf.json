@@ -1,0 +1,59 @@
+{
+  "build": {
+    "distDir": "../dist",
+    "devPath": "https://techllama.xyz",
+    "beforeDevCommand": "",
+    "beforeBuildCommand": ""
+  },
+  "tauri": {
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.techllama.wrapper",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "resources": [],
+      "externalBin": [],
+      "copyright": "",
+      "category": "DeveloperTool",
+      "shortDescription": "",
+      "longDescription": "",
+      "deb": {
+        "depends": []
+      },
+      "macOS": {
+        "frameworks": [],
+        "minimumSystemVersion": "",
+        "exceptionDomain": "",
+        "signingIdentity": null,
+        "providerShortName": null,
+        "entitlements": null
+      },
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "allowlist": {
+      "all": true
+    },
+    "windows": [
+      {
+        "title": "TechLlama",
+        "width": 800,
+        "height": 600,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' https://techllama.xyz; script-src 'self' https://techllama.xyz 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://techllama.xyz 'unsafe-inline'; img-src 'self' https://techllama.xyz data: https:; font-src 'self' https://techllama.xyz data: https:;"
+    }
+  }
+}
