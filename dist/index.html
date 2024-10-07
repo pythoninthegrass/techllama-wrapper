@@ -1,29 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TechLlama</title>
+  <title>techllama.xyz</title>
   <style>
     body,
-    html {
+    html,
+    iframe {
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
-    }
-
-    iframe {
       width: 100%;
-      height: 100%;
-      border: none;
+      overflow: hidden;
     }
   </style>
 </head>
 
 <body>
-  <iframe src="https://techllama.xyz" frameborder="0"></iframe>
+  <iframe id="techllama-frame" src="https://techllama.xyz"></iframe>
+  <script>
+    const { invoke } = window.__TAURI__.tauri;
+
+    function checkLoginStatus() {
+      const iframe = document.getElementById('techllama-frame');
+
+      // Check if the token cookie exists
+      if (iframe.contentDocument.cookie.includes('token=')) {
+        console.log('User logged in');
+        invoke('maximize_window');
+        // Remove the event listener after maximizing
+        iframe.removeEventListener('load', checkLoginStatus);
+      } else {
+        console.log('User not logged in');
+      }
+    }
+
+    document.getElementById('techllama-frame').addEventListener('load', checkLoginStatus);
+
+    // Additional check for cookie changes
+    setInterval(() => {
+      const iframe = document.getElementById('techllama-frame');
+      if (iframe.contentDocument.cookie.includes('token=')) {
+        console.log('Login detected');
+        invoke('maximize_window');
+        clearInterval(this);
+      }
+    }, 1000);
+
+    const { registerAll } = window.__TAURI__.globalShortcut;
+    const { appWindow } = window.__TAURI__.window;
+
+    async function registerShortCuts() {
+      await registerAll(["Cmd+Shift+G"], async (shortcut) => {
+        const isVisible = await appWindow.isVisible();
+        if (isVisible) {
+          await appWindow.hide();
+        } else {
+          await appWindow.show();
+        }
+      });
+    }
+
+    registerShortCuts();
+  </script>
 </body>
 
 </html>
